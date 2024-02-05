@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body style="background-color:powderblue;">
+<h1>Welcome to the Weather App!</h1>
+<p>This is a simple Spring Boot weather application.</p>
+
+<form id="weatherForm" onsubmit="return getWeather();">
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city" required>
+    <button type="submit">Get Weather</button>
+</form>
+
+<div id="weatherResult"></div>
+
+<script>
+    function getWeather() {
+        var city = document.getElementById("city").value;
+
+        // Use AJAX to fetch weather data without refreshing the page
+        $.get("/weather/" + city, function(data) {
+
+            // Update the 'weatherResult' div with the weather details
+            document.getElementById("weatherResult").innerHTML =
+                "City: " + data.city + "<br>" +
+                "Description: " + data.description + "<br>" +
+                "Temperature: " + data.temperature + "°C" + "<br>" +
+        });
+
+        // Return false to prevent the form from submitting in the traditional way
+        return false;
+    }
+</script>
+</body>
+</html>
